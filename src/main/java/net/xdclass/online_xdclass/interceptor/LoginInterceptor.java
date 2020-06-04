@@ -14,6 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
+/**
+ *@Description  会话拦截
+ *@CreateDate 2020\6\4 0004 10:34
+ *@Author z
+ *@Version 1.0
+ */
 public class LoginInterceptor implements HandlerInterceptor {
 
     /**
