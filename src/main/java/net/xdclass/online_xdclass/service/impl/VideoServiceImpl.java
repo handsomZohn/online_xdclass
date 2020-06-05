@@ -9,7 +9,10 @@ import net.xdclass.online_xdclass.utils.BaseCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 @Service
@@ -109,5 +112,51 @@ public class VideoServiceImpl implements VideoService {
         }
 
         return null;
+    }
+
+    @Override
+    public List<VideoBanner> getBannerList() {
+        /**
+         * 返回数据库查询数据或缓存热点数据
+         */
+        try {
+            Object o = baseCache.getTenMinuteCache().get(CacheKeyManager.INDEX_BANNER_KEY, () -> {
+                List<VideoBanner> videoBanners = videoMapper.listVideoBanner();
+                return videoBanners;
+            });
+            if (o instanceof List) {
+                List<VideoBanner> videoBanners = (List<VideoBanner>)o;
+                return videoBanners;
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        /**
+         * 服务降级返回兜底数据
+         */
+        return new ArrayList<VideoBanner>(){{
+            add(new VideoBanner(){{
+                setCreateTime(new Date());
+                setId(10);
+                setImg("");
+                setUrl("");
+                setWeight(10);
+            }});
+            add(new VideoBanner(){{
+                setCreateTime(new Date());
+                setId(20);
+                setImg("");
+                setUrl("");
+                setWeight(10);
+            }});
+            add(new VideoBanner(){{
+                setCreateTime(new Date());
+                setId(30);
+                setImg("");
+                setUrl("");
+                setWeight(10);
+            }});
+        }};
     }
 }

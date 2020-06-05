@@ -12,4 +12,10 @@ public interface VideoService {
     List<VideoBanner> listBanner();
 
     Video findDetailById(int videoId);
+
+    /**
+     * 获取banner列表
+     * @return
+     */
+    List<VideoBanner> getBannerList();
 }

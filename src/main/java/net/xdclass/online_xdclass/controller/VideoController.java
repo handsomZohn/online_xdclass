@@ -23,14 +23,30 @@ public class VideoController {
 
     /**
      * 轮播图列表
+     *
      * @return
      */
     @GetMapping("list_banner")
-    public JsonData indexBanner(){
+    public JsonData indexBanner() {
 
 
-        List<VideoBanner> bannerList =  videoService.listBanner();
+        List<VideoBanner> bannerList = videoService.listBanner();
 
+
+        return JsonData.buildSuccess(bannerList);
+
+    }
+
+    /**
+     * 轮播图列表
+     *
+     * @return
+     */
+    @GetMapping("getBannerList")
+    public JsonData getBannerList() {
+
+
+        List<VideoBanner> bannerList = videoService.getBannerList();
 
 
         return JsonData.buildSuccess(bannerList);
@@ -40,10 +56,11 @@ public class VideoController {
 
     /**
      * 视频列表
+     *
      * @return
      */
     @RequestMapping("list")
-    public JsonData listVideo(){
+    public JsonData listVideo() {
 
         List<Video> videoList = videoService.listVideo();
         return JsonData.buildSuccess(videoList);
@@ -52,13 +69,12 @@ public class VideoController {
 
     /**
      * 查询视频详情，包含章，集信息
+     *
      * @param videoId
      * @return
      */
     @GetMapping("find_detail_by_id")
-    public JsonData findDetailById(@RequestParam(value = "video_id",required = true)int videoId){
-
-
+    public JsonData findDetailById(@RequestParam(value = "video_id", required = true) int videoId) {
 
 
         Video video = videoService.findDetailById(videoId);
@@ -66,10 +82,6 @@ public class VideoController {
         return JsonData.buildSuccess(video);
 
     }
-
-
-
-
 
 
 }

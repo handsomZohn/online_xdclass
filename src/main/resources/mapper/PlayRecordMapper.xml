@@ -3,7 +3,6 @@
 <mapper namespace="net.xdclass.online_xdclass.mapper.PlayRecordMapper">
 
 
-
     <insert id="saveRecord" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 
 
@@ -11,5 +10,34 @@
           VALUES (#{userId},#{videoId},#{currentNum},#{episodeId},#{createTime});
 
     </insert>
+
+    <update id="updateVideoSelective"
+            parameterType="net.xdclass.online_class.domain.Video">
+        update video
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title != null ">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null ">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="coverImg != null ">
+                cover_img = #{coverImg,jdbcType=VARCHAR},
+            </if>
+            <if test="price != 0 ">
+                price = #{price,jdbcType=INTEGER},
+            </if>
+
+            <if test="createTime !=null ">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <!-- 特别注意： ⼀一定要看pojo类⾥里里⾯面的是基本数据类型，还是包装数据类型-->
+            <if test="point != null ">
+                point = #{point,jdbcType=DOUBLE},
+            </if>
+        </trim>
+        where
+        id = #{id}
+    </update>
 
 </mapper>
